@@ -5,15 +5,21 @@ import IUser from "../utils/interfaceUser";
 export const usersService = {
     getUsers: async() => {
         try{
-        const users = await User.find({});
-        return users;
+            const users = await User.find({})
+            return users;
         } catch (error:any) {
             throw new Error(error);
         }
     },
     getUserById: async (id:string) => {
         try {
-            const user = await User.findById(id);
+            const user = await User.findById(id)
+                .populate({
+                    path: 'orders',
+                    populate: {
+                        path: 'products'
+                    }
+                });
             return user;
         } catch (error:any) {
             throw new Error(error);
