@@ -20,7 +20,8 @@ export const productsService = {
     },
     postProduct: async (data:IProduct) => {
         try{
-            const newProduct = await Product.create(data);
+            const slug = data.name.split(" ").join("-").toLowerCase()
+            const newProduct = await Product.create({...data, slug});
             return newProduct;
         } catch (error:any) {
             throw new Error(error);

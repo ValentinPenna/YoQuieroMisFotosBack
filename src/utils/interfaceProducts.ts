@@ -4,4 +4,6 @@ export default interface IProduct {
     price: number;
     description: string;
     photosNumber: number;
+    slug: string;
+    photos?: string[]
 }
