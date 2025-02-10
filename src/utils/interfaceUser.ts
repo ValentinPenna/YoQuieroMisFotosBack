@@ -5,8 +5,7 @@ export default interface IUser {
     name: string;
     email: string;
     password: string;
-    address: string;
-    phone: string;
+    lastName: string;
     role?: string;
     orders?: IOrder[];
 }

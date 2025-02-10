@@ -23,9 +23,9 @@ export const usersController = {
     postUser: async (req:Request, res:Response) => {
         try {
             const user = req.body
-            if(!user.name || !user.email || !user.password || !user.address || !user.phone) res.status(400).json({error: 'Faltan datos por rellenar'})
+            if(!user.name || !user.email || !user.password || !user.lastName) res.status(400).json({error: 'Faltan datos por rellenar'})
             const newUser = await usersService.postUser(user);
-            res.status(201).json({"Usuario Creado": newUser});
+            res.status(201).json({newUser});
         } catch (error) {
             res.status(500).json(error);
         }
@@ -34,7 +34,7 @@ export const usersController = {
         try {
             const data = req.body
             const user = await usersService.loginUser(data);
-            res.status(200).json({"Usuario Logueado": user});
+            res.status(200).json({user});
         } catch (error) {
             res.status(500).json(error);
         }
