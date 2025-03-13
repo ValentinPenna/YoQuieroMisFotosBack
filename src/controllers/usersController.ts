@@ -33,8 +33,8 @@ export const usersController = {
     loginUser: async (req:Request, res:Response) => {
         try {
             const data = req.body
-            const user = await usersService.loginUser(data);
-            res.status(200).json({user});
+            const { user, token } = await usersService.loginUser(data);
+            res.status(200).json({ user, token });
         } catch (error) {
             res.status(500).json(error);
         }

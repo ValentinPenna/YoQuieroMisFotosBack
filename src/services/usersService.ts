@@ -2,6 +2,9 @@ import {User} from "../models/User";
 import { comparePassword, encryptPassword } from "../utils/bcrypt";
 import { ICredentials } from "../utils/interfaceCredentials";
 import IUser from "../utils/interfaceUser";
+import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../config/config";
+
 export const usersService = {
     getUsers: async() => {
         try{
@@ -35,19 +38,20 @@ export const usersService = {
         }
     },
     loginUser: async (data:ICredentials) => {
-        try{
-            const user = await User.findOne({email: data.email});
-            if(!user) {
+        try {
+            const user = await User.findOne({ email: data.email });
+            if (!user) {
                 throw new Error("Wrong Credentials email");
             }
             const isPasswordCorrect = comparePassword(data.password, user.password);
-            if(!isPasswordCorrect) {
+            if (!isPasswordCorrect) {
                 throw new Error("Wrong Credentials password");
+            } else {
+                // Generar el token
+                const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
+                return { user, token }; // Devolver el usuario y el token
             }
-            else{
-                return user;
-            }
-        } catch (error:any) {
+        } catch (error: any) {
             throw new Error(error);
         }
     },

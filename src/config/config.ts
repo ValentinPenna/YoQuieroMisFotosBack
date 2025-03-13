@@ -1,0 +1,1 @@
+export const JWT_SECRET = process.env.JWT_SECRET || "tu_clave_secreta"; // Cambia esto en producción 
